@@ -105,13 +105,14 @@ select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--line);
 .kbar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--ink)}
 .kbar b{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:var(--bad);border-radius:1px}
 .kspark{width:100%;max-width:140px;height:30px;margin-top:auto;padding-top:4px}
-.kmix{display:flex;gap:2px;height:10px;margin:6px 0 4px}
-.kmix i{display:block;border-radius:2px}
-.kmixl{list-style:none;margin:0;padding:0;font-size:12px;display:grid;gap:2px}
-.kmixl li{display:grid;grid-template-columns:16px 1fr auto 34px;gap:6px;align-items:center}
-.kmixl svg{width:14px;height:14px}
-.kmixl b{font-variant-numeric:tabular-nums;font-weight:600}
-.kmixl .muted{text-align:right}
+.kmixb{display:grid;gap:4px;margin-top:6px}
+.kmixb button{display:grid;grid-template-columns:16px 64px 1fr;gap:6px;align-items:center;font:inherit;font-size:12px;color:var(--ink);background:none;border:0;padding:3px 4px;margin:0 -4px;border-radius:6px;cursor:pointer;text-align:left}
+.kmixb button:hover{background:var(--line-2)}
+.kmixb button.dim{opacity:.4}
+.kmixb svg{width:14px;height:14px}
+.kmt{display:flex;align-items:center;gap:6px;min-width:0}
+.kmt i{display:block;height:14px;border-radius:3px;flex:none}
+.kmt b{font-weight:600;font-variant-numeric:tabular-nums}
 @media (max-width:1000px){.ahero{grid-template-columns:1fr}}
 .atool{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap;margin:18px 0 4px}
 .atitle{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
@@ -578,11 +579,10 @@ body:not(.ops) .fbreak{display:none}
   <section class="card ghgban">
     <span class="pin" data-n="1">1</span>
     <div class="gb-l">
-      <div class="kicker">SuCRIT's headline goal · Indicator 1</div>
       <div class="big" id="aNdcBig"></div>
       <div class="gb-sub fbx" id="aNdcSub" data-fb="Feedback 6 · detail in hover"></div>
     </div>
-    <svg id="aNdc" class="gb-c" viewBox="0 0 560 176" role="img" aria-label="Emissions intensity as clouds: business as usual, 7.4% smaller in 2025 and 21.7% smaller in 2030, inside the 15% goal line"></svg>
+    <svg id="aNdc" class="gb-c" viewBox="0 0 560 162" role="img" aria-label="Emissions intensity as clouds: business as usual, 7.4% smaller in 2025 and 21.7% smaller in 2030, inside the 15% goal line"></svg>
     <div class="gb-r"><div class="gb-rh" id="aPuffH"></div><div class="gb-puffs" id="aPuffs"></div></div>
   </section>
   <div class="scards" id="srcCards"></div>
@@ -595,16 +595,15 @@ body:not(.ops) .fbreak{display:none}
     <div id="aSide" class="kpiw"></div>
   </section>
   <section class="card flowcard" id="aFlow"></section>
-  <div class="sec-h"><h2>In detail</h2></div>
-  <div class="sec-h"><h2 id="aTitle"></h2><p>Where things are now, where they're meant to be by 2030, and whether the pace is enough</p></div>
+  <div class="sec-h"><h2>By indicator</h2></div>
   <section style="margin-top:0">
     <div class="card fbx" data-fb="Feedback 1 · year trends + estimates">
       <span class="pin" data-n="2">2</span>
       <div class="legend" style="margin:0 0 6px">
-        <span><i style="background:var(--ink)"></i>Now (selected year)</span>
-        <span><i style="background:url(#) ;background-image:repeating-linear-gradient(45deg,#c9c8c2 0 2px,#fff 2px 5px);border:1px solid var(--ink-3)"></i>Still to go to 2030 projection</span>
+        <span><i style="background:var(--ink)"></i>Now</span>
+        <span><i style="background:url(#) ;background-image:repeating-linear-gradient(45deg,#c9c8c2 0 2px,#fff 2px 5px);border:1px solid var(--ink-3)"></i>To 2030</span>
         <span><svg width="12" height="11"><path d="M6 1 L11 10 L1 10Z" fill="#fff" stroke="#1c1c1a" stroke-width="1.5"/></svg> Target</span>
-        <span><svg width="26" height="10"><line x1="1" y1="5" x2="25" y2="5" stroke="#1c1c1a" stroke-width="1.6" stroke-dasharray="3 2"/></svg> Trend: 2026 estimate (hollow) and 2030 (dashed)</span>
+        <span><svg width="26" height="10"><line x1="1" y1="5" x2="25" y2="5" stroke="#1c1c1a" stroke-width="1.6" stroke-dasharray="3 2"/></svg> Estimate / 2030</span>
       </div>
       <div id="aRows"></div>
     </div>
@@ -613,7 +612,7 @@ body:not(.ops) .fbreak{display:none}
   <section>
     <div class="card summary">
       <span class="pin" data-n="3">3</span>
-      <div class="chart-h"><div><h3>Ready-to-use summary</h3><p>Plain sentences for a report or slide. They update with the filters.</p></div><button class="btn" id="copySum">Copy text</button></div>
+      <div class="chart-h"><div><h3>Ready-to-use summary</h3><p>For a report or slide. Updates with the filters.</p></div><button class="btn" id="copySum">Copy text</button></div>
       <ul id="aSum"></ul>
     </div>
   </section>
@@ -853,7 +852,7 @@ function paceOf(s, y, unit){
   if(rec==null) return {cls:"neu", st:"Needs +"+f(need)+u+" a year", txt:`2023 is the first year, so no recent pace yet`};
   const r=rec/need;
   return {cls: r>=1?"good": r>=.75?"neu":"bad", st: r>=1?"On pace for 2030": r>=.75?"Slightly slower than needed":"Slower than needed",
-    txt:`Recent pace <b>+${f(rec)}${u}/yr</b> · needed <b>+${f(need)}${u}/yr</b> to reach ${fmt(t,unit)}${unit==="GW"?" GW":""} by 2030`};
+    txt:`Pace <b>+${f(rec)}${u}/yr</b> · needs <b>+${f(need)}${u}/yr</b>`};
 }
 function bullet(o){
   // o: {now, proj, max, target, base, lower, unit, est, refLine}
@@ -927,7 +926,7 @@ function drawSrcCards(){
   const g=D[geo], i=YEARS.indexOf(year), prev=YEARS[i-1], tot=SRCX.reduce((a,[k])=>a+(g[k][year]||0),0);
   const grow=(a,b)=>{ if(!prev||!a||b==null) return ""; const d=pct(a,b); return Math.abs(d)<0.5?" · no change":` · <span class="${d>0?"up":"dn"}">${d>0?"▲":"▼"} ${Math.abs(d).toFixed(0)}%</span>`; };
   let h=`<button class="scard all${isSrc(mapM)?"":" on"}" data-src="all" aria-pressed="${!isSrc(mapM)}"><div class="sc-ph sc-all">${SRCX.map(([k])=>ICON("i-"+k)).join("")}</div>
-    <div class="sc-b"><span class="sc-n">All clean sources</span><span class="sc-v">${cnt("sc-all",tot,gdec(tot))}<small>GW</small></span><span class="sc-s">${name(geo)}${grow(prev&&SRCX.reduce((a,[k])=>a+(g[k][prev]||0),0),tot)}</span></div></button>`;
+    <div class="sc-b"><span class="sc-n">All clean sources</span><span class="sc-v">${cnt("sc-all",tot,gdec(tot))}<small>GW</small></span><span class="sc-s">${grow(prev&&SRCX.reduce((a,[k])=>a+(g[k][prev]||0),0),tot).replace(/^ · /,"")||"First year tracked"}</span></div></button>`;
   SRCX.forEach(([k,l])=>{ const v=g[k][year]||0;
     h+=`<button class="scard${mapM===k?" on":""}" data-src="${k}" aria-pressed="${mapM===k}"><div class="sc-ph" style="background-image:url(img/${k}.jpg)"><span class="sc-ic">${ICON("i-"+k)}</span></div>
       <div class="sc-b"><span class="sc-n">${l}</span><span class="sc-v">${cnt("sc-"+k,v,gdec(v))}<small>GW</small></span><span class="sc-s">${tot?Math.round(v/tot*100):0}% of clean${grow(prev&&g[k][prev],v)}</span></div></button>`; });
@@ -936,7 +935,7 @@ function drawSrcCards(){
 
 function drawMap(){
   const svg=document.getElementById("aMap"), k=mapM, src=isSrc(k);
-  seg(document.getElementById("mapSeg"),MAPM.map(m=>[m[0],m[3]]),src?null:k,v=>{mapM=v;drawMap();drawSrcCards();});
+  seg(document.getElementById("mapSeg"),MAPM.map(m=>[m[0],m[3]]),src?null:k,v=>{mapM=v;drawMap();drawSrcCards();drawSide();});
   document.getElementById("mapT").textContent=`${mLabel(k)} in the six SuCRIT states`;
   if(!svg.dataset.built){
     let b=`<g transform="translate(${MAP_OX} ${MAP_OY})">`;
@@ -981,24 +980,19 @@ function kdelta(a,dir,isPct){
 }
 const kbar=(v,max,tick,tickL)=>`<div class="kbar"><i style="width:${Math.min(100,v/max*100).toFixed(1)}%"></i>${tick!=null?`<b style="left:${(tick/max*100).toFixed(1)}%" data-tip="${tickL}"></b>`:""}</div>`;
 const badge=(ico,t)=>`<span class="kb t-${t}"><svg aria-hidden="true"><use href="#${ico}"/></svg></span>`;
+// India: one tile for whatever the map shows, then the source mix as bars
 function glanceHTML(){
-  const n=D.National, yv=k=>YEARS.map(y=>n[k][y]), yi=YEARS.indexOf(year), cumT=STO.nat.t.slice(0,yi+1).reduce((a,c)=>a+c,0), op=STO.nat.o[yi];
-  const tile=(ico,t,l,val,extra,spark)=>`<div class="kpi"><div class="khd">${badge(ico,t)}<span class="kl">${l}</span></div><div class="kv">${val}</div>${extra}${spark||""}</div>`;
-  const live=mixOf("National",year).filter(m=>m.v>0);
-  return `<div class="kpih"><h3>India at a glance</h3><span class="muted">${yl(year)}</span></div><div class="kpis">`
-   +tile("t-pow","amb","Clean power capacity",`${cnt("k-cap",n.total[year],1)}<small>GW</small>`,
-      kbar(n.total[year],500)+`<span class="kn">${Math.round(n.total[year]/5)}% of the 500 GW target for 2030</span>`+kdelta(yv("total"),1),kspark(yv("total"),500))
-   +tile("k-pie","grn","Clean share of capacity",`${cnt("k-s2a",n.s2a[year],1)}<small>%</small>`,
-      kbar(n.s2a[year],100,50,"NDC: 50% by 2030")+`<span class="kn">${n.s2a[year]>=50?"Past":"Below"} the 50% NDC goal for 2030</span>`+kdelta(yv("s2a"),1,true),kspark(yv("s2a")))
-   +tile("k-plug","blu","Clean share of electricity",`${cnt("k-gen",n.gen[year],1)}<small>%</small>`,
-      kbar(n.gen[year],100)+`<span class="kn">of units actually produced</span>`+kdelta(yv("gen"),1,true),kspark(yv("gen")))
-   +tile("g-cloud","gry","CO₂ per unit of electricity",`${cnt("k-ei",n.ei[year],0)}<small>g/kWh</small>`,
-      `<span class="kn">lower is better</span>`+kdelta(yv("ei"),-1),kspark(yv("ei")))
-   +tile("k-batt","vio","Storage working",`${cnt("k-sto",op,1)}<small>GWh</small>`,
-      kbar(op,cumT)+`<span class="kn">of ${cumT} GWh ordered since 2023</span>`,kspark(STO.nat.o))
+  const n=D.National, k=mapM, yv=key=>YEARS.map(y=>n[key][y]), v=n[k][year];
+  const live=mixOf("National",year).filter(m=>m.v>0).sort((a,b)=>b.v-a.v), top=live.length?live[0].p:1;
+  const T={total:["t-pow","amb","Clean power capacity","GW",kbar(v,500)+`<span class="kn">${Math.round(v/5)}% of the 500 GW target for 2030</span>`],
+    s2a:["k-pie","grn","Clean share of capacity","%",kbar(v,100,50,"NDC: 50% by 2030")+`<span class="kn">${v>=50?"Past":"Below"} the 50% NDC goal for 2030</span>`],
+    gen:["k-plug","blu","Clean share of electricity","%",kbar(v,100)+`<span class="kn">of units actually produced</span>`]};
+  const [ico,t,l,u,extra]=T[k]||["i-"+k,"brn",SRCN[k]+" capacity","GW",`<span class="kn">${Math.round((live.find(m=>m.k===k)?.p||0)*100)}% of clean capacity</span>`];
+  return `<div class="kpi"><div class="khd">${isSrc(k)?`<span class="kb">${ICON(ico)}</span>`:badge(ico,t)}<span class="kl">${l}</span></div>
+      <div class="kv">${cnt("k-"+k,v,u==="%"?1:gdec(v))}<small>${u}</small></div>${extra}${kdelta(yv(k),1,u==="%")}</div>`
    +`<div class="kpi"><div class="khd">${badge("k-layers","brn")}<span class="kl">What clean capacity is made of</span></div>
-      <div class="kmix">${live.map(m=>`<i style="flex:${m.p.toFixed(4)} 0 0;background:${SBG[m.k]}" data-tip="<b>${m.l}</b><br>${fmt(m.v,"GW")} GW · ${Math.round(m.p*100)}%"></i>`).join("")}</div>
-      <ul class="kmixl">${[...live].sort((a,b)=>b.v-a.v).map(m=>`<li>${ICON("i-"+m.k)}<span>${m.l}</span><b>${fmt(m.v,"GW")}</b><span class="muted">${Math.round(m.p*100)}%</span></li>`).join("")}</ul></div></div>`;
+      <div class="kmixb">${live.map(m=>`<button class="${isSrc(k)&&k!==m.k?"dim":""}" data-src="${m.k}" data-tip="<b>${m.l}</b><br>${fmt(m.v,"GW")} GW">${ICON("i-"+m.k)}<span>${m.l}</span>
+        <span class="kmt"><i style="width:${(m.p/top*82).toFixed(1)}%;background:${SBG[m.k]}"></i><b>${Math.round(m.p*100)}%</b></span></button>`).join("")}</div></div>`;
 }
 function profileHTML(g){
   const d=D[g], n=D.National;
@@ -1041,7 +1035,7 @@ function drawFlow(){
   s+=lab(X[0],"t-ghg","All power plants","100","")+lab(X[1],"k-leaf","Clean power plants",cnt("f-a",a,0,"tspan"),"%")+lab(X[2],"t-pow","Clean electricity",cnt("f-b",b,0,"tspan"),"%");
   s+=`<text x="${X[0]+cw+8}" y="${y0+ha+(h-ha)/2+4}" font-size="11.5" fill="#55544f">Coal, gas &amp; other ${Math.round(100-a)}%</text></svg>`;
   const el=document.getElementById("aFlow");
-  el.innerHTML=`<div class="flowh"><h3>Of every 100 units of power plant capacity in ${name(geo)}, ${Math.round(a)} are clean. Only ${Math.round(b)} of every 100 units of electricity produced are.</h3>
+  el.innerHTML=`<div class="flowh"><h3>Clean share: power plants vs electricity produced</h3>
     <span class="info" data-tip="Solar only generates in daylight and wind varies by season, so a clean gigawatt produces less electricity than a coal plant running round the clock.">i</span></div>${s}`;
   countUp(el);
 }
@@ -1070,27 +1064,28 @@ function drawAHero(){
   drawSrcCards(); drawMap(); drawSide(); drawFlow();
 }
 document.getElementById("aMap").addEventListener("click",e=>{ const t=e.target.closest("[data-g]"); if(!t) return; const g=t.dataset.g; geo=geo===g?"National":g; render(); });
-document.getElementById("srcCards").addEventListener("click",e=>{ const b=e.target.closest("[data-src]"); if(!b) return; mapM=b.dataset.src==="all"?"total":b.dataset.src; drawSrcCards(); drawMap(); });
-document.getElementById("aSide").addEventListener("click",e=>{ if(e.target.closest("[data-back]")){ geo="National"; render(); } });
+const pickSrc=e=>{ const b=e.target.closest("[data-src]"); if(!b) return false; const s=b.dataset.src; mapM=s==="all"?"total":s; drawSrcCards(); drawMap(); drawSide(); return true; };
+document.getElementById("srcCards").addEventListener("click",pickSrc);
+document.getElementById("aSide").addEventListener("click",e=>{ if(pickSrc(e)) return; if(e.target.closest("[data-back]")){ geo="National"; render(); } });
 document.getElementById("playY").onclick=togglePlay;
 document.getElementById("dlCsv").onclick=downloadCsv;
 
 /* Indicator 1 as shrinking clouds (modelled), next to measured CO₂ puffs (3A) by year */
 function drawGhgBanner(){
   document.getElementById("aNdcBig").innerHTML=`${cnt("g-cut",21.7,1)}% <span class="bsub">less by 2030</span>`;
-  document.getElementById("aNdcSub").innerHTML=`Modelled extra cut in emissions per rupee of GDP, beyond business as usual. Goal: about 15%. <span class="chip dash">Modelled to beat the goal</span> <span class="info" data-tip="Not measured yet: the official figure waits for India's next climate report (BTR). Both values are WRI India modelling scenarios on a net-zero path, so they aren't credited to SuCRIT alone. Tracked for India only.">i</span>`;
+  document.getElementById("aNdcSub").innerHTML=`Extra cut in emissions per rupee of GDP, beyond business as usual. <span class="chip dash">Modelled · beats the goal</span> <span class="info" data-tip="<b>SuCRIT's headline goal (Indicator 1)</b><br>Not measured yet: the official figure waits for India's next climate report (BTR). Both values are WRI India modelling scenarios on a net-zero path, so they aren't credited to SuCRIT alone. Tracked for India only.">i</span>`;
   const BW=150, base=134, cl=(cx,w,fill,stroke,dash,tip)=>{ const h=w*14/24, sw=(1.6*24/w).toFixed(3);
     return `<use href="#g-cloud" x="${(cx-w/2).toFixed(1)}" y="${(base-h).toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" style="fill:${fill};stroke:${stroke};stroke-width:${sw};${dash?`stroke-dasharray:${(4*24/w).toFixed(2)} ${(3*24/w).toFixed(2)}`:""}"${tip?` data-tip="${tip}"`:""}/>`; };
-  const lab=(cx,a,b)=>`<text x="${cx}" y="${base+22}" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1c1a">${a}</text><text x="${cx}" y="${base+39}" text-anchor="middle" font-size="12" fill="#55544f">${b}</text>`;
+  const lab=(cx,a)=>`<text x="${cx}" y="${base+22}" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1c1a">${a}</text>`;
   const arr=x=>`<path d="M${x-12} ${base-30}h22m-6-6 6 6-6 6" fill="none" stroke="#a3a29b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>`;
   document.getElementById("aNdc").innerHTML=
      cl(85,BW,"#c9c8c2","#a3a29b",false,"<b>Business as usual, 2030</b><br>Emissions per rupee of GDP with no extra action")
     +arr(182)+cl(278,BW*(1-.074),"#dde6f0","#55544f",true,"<b>2025, modelled</b><br>7.4% below business as usual")
     +arr(372)+cl(468,BW*.85,"none","#1c1c1a",true,null)+cl(468,BW*(1-.217),"#cfe0f2","#55544f",true,"<b>2030, modelled</b><br>21.7% below business as usual. Inside the 15% goal line.")
-    +`<text x="468" y="${(base-BW*.85*14/24-8).toFixed(1)}" font-size="12" font-weight="700" fill="#1c1c1a" text-anchor="middle">SuCRIT goal: −15%</text>`
-    +lab(85,"Business as usual","2030, no extra action")+lab(278,"2025 · −7.4%","modelled")+lab(468,"2030 · −21.7%","modelled");
+    +`<text x="468" y="${(base-BW*.85*14/24-8).toFixed(1)}" font-size="12" font-weight="700" fill="#1c1c1a" text-anchor="middle">15% goal</text>`
+    +lab(85,"Business as usual")+lab(278,"2025 · −7.4%")+lab(468,"2030");
   const g=D[geo];
-  document.getElementById("aPuffH").innerHTML=`<b>Measured: CO₂ per unit of electricity</b><span>${name(geo)} · each puff is 100 g/kWh</span>`;
+  document.getElementById("aPuffH").innerHTML=`<b>Measured CO₂ per kWh</b><span>1 puff = 100 g</span>`;
   document.getElementById("aPuffs").innerHTML=YEARS.map(y=>{ const v=g.ei[y]; return `<div class="gp${y===year?" on":""}" data-tip="<b>${name(geo)}, ${yl(y)}</b><br>${v!=null?Math.round(v)+" gCO₂/kWh":"no value"}">${v!=null?ghgIcon("clouds",v):""}<b>${v!=null?Math.round(v):"—"}</b><span>${isEst(y)?"2026e":y}</span></div>`; }).join("");
   countUp(document.getElementById("aNdcBig"));
 }
@@ -1098,7 +1093,6 @@ function drawA(){
   drawAHero();
   drawGhgBanner();
 
-  document.getElementById("aTitle").textContent = `${name(geo)}, ${yl(year)}: status by indicator`;
   const el=document.getElementById("aRows"); el.innerHTML="";
   const g=D[geo], est=isEst(year);
 
@@ -1115,7 +1109,7 @@ function drawA(){
   // 2A
   p=paceOf(g.s2a,year,"%");
   const tA = geo==="National" ? {v:50,l:"Target 50%"} : null;
-  if(geo==="National" && g.s2a[year]>=50) p={cls:"good",st:"Past the 50% target",txt:`Reached 50% ahead of 2030. Projection: ${fmt(g.s2a["2030"],"%")}`};
+  if(geo==="National" && g.s2a[year]>=50) p={cls:"good",st:"Past the 50% target",txt:"Reached ahead of 2030"};
   rowA(el,{id:"2A",type:"Analytical",label:"Share of capacity that's clean",tip:"Clean capacity ÷ all installed capacity.",val:fmt(g.s2a[year],"%"),
     svg:bullet({now:g.s2a[year],proj:g.s2a["2030"],max:100,unit:"%",est,target:tA}),...p});
   // 3
@@ -1124,21 +1118,21 @@ function drawA(){
     svg:bullet({now:g.gen[year],proj:g.gen["2030"],max:100,unit:"%",est,refLine:geo!=="National"?{v:D.National.gen[year],l:"India "+D.National.gen[year].toFixed(0)+"%"}:null}),...p});
   // 3A
   const ei=g.ei[year], e0=g.ei["2023"], ch=pct(e0,ei);
-  rowA(el,{id:"3A",type:"Tracking",label:"CO₂ per unit of electricity",tip:"Grid emission rate, CEA CO₂ Baseline Database v22.0. Lower is better.",val:`${fmt(ei)}<small>gCO₂/kWh</small>`,
+  rowA(el,{id:"3A",type:"Tracking",label:"CO₂ per unit of electricity",tip:"Grid emission rate, CEA CO₂ Baseline Database v22.0. Lower is better. No 2030 target set; may be dropped (30 Sept notes).",val:`${fmt(ei)}<small>gCO₂/kWh</small>`,
     svg:bullet({now:ei,base:year!=="2023"?e0:null,max:1000,unit:"g",est,refLine:geo!=="National"?{v:D.National.ei[year],l:"India "+Math.round(D.National.ei[year])}:null}),
     cls: year==="2023"?"neu": ch<-0.5?"good": ch>0.5?"bad":"neu", st: year==="2023"?"Baseline year": ch<-0.5?`Getting cleaner (${ch.toFixed(1)}% vs 2023)`: ch>0.5?`Getting dirtier (+${ch.toFixed(1)}% vs 2023)`:"About the same as 2023",
-    txt:"Lower is better · no 2030 target set · in doubt: may be dropped (30 Sept notes)"});
+    txt:"Lower is better · no 2030 target"});
   // 4 RCO
   const r4=rcoAt(geo,year), r0=rcoAt(geo,"2023");
   rowA(el,{id:"4",type:"Outcome",label:"Clean power bought vs the law (RCO)",tip:"Clean share of what power companies (discoms) buy, against the share the law requires. Proxy values until official BEE figures arrive.",val:`${r4.v.toFixed(1)}%<small>bought · ${r4.yy}</small>`,
     svg:bullet({now:r4.v,max:50,unit:"%",est:false,target:{v:r4.req,l:`Required ${r4.req}% (${r4.yy})`}}),
     cls:r4.gap>=0?"good":"bad",st:r4.gap>=0?"Meets the required share":`${Math.abs(r4.gap).toFixed(1)} pts short of the law`,
-    txt:`Gap ${r0.gap>=0?"+":""}${r0.gap.toFixed(1)} pts in 2023 → ${r4.gap>=0?"+":""}${r4.gap.toFixed(1)} in ${r4.yy}${year==="2026"?" (2026 not available)":""} · rule rises to 43.3% by 2030 · proxy values, official BEE figures not in yet`});
+    txt:`Gap ${r0.gap>=0?"+":""}${r0.gap.toFixed(1)} pts in 2023 · rule rises to 43.3% by 2030`});
   // 2B
   const b=g.s2b[year];
   rowA(el,{id:"2B",type:"Impact",label:"Share of new capacity that's clean",tip:"Clean added ÷ net capacity added that year. Can exceed 100% when coal/gas plants close.",val:fmt(b,"%"),
     svg:bullet({now:Math.min(b,150),max:150,unit:"%",est,refLine:{v:100,l:"100% = all new capacity clean"}}),
-    cls:"neu",st:"Neutral: no good/bad direction",txt:b>100?"Over 100% because old plants closed this year":"Jumps a lot year to year, so read with care"});
+    cls:"neu",st:"No good/bad direction",txt:b>100?"Over 100%: old plants closed":"Jumps a lot year to year"});
   // 5 storage (national)
   const yi=YEARS.indexOf(year), cumT=STO.nat.t.slice(0,yi+1).reduce((a,c)=>a+c,0), op=STO.nat.o[yi];
   rowA(el,{id:"5",type:"Impact",nat:true,label:"Storage working",tip:"Operational battery storage vs all storage tendered since 2023 (batteries and pumped hydro, national).",val:`${op}<small>of ${cumT} GWh ordered</small>`,
