@@ -24,7 +24,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system
 
 /* version switcher */
 .versions{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-top:14px}
-.vbtn{all:unset;position:relative;box-sizing:border-box;cursor:pointer;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:10px 14px;display:flex;gap:12px;align-items:flex-start}
+.vbtn{all:unset;position:relative;box-sizing:border-box;cursor:pointer;background:var(--card);border:1.5px solid var(--line);border-radius:10px;padding:8px 14px;display:flex;gap:12px;align-items:center}
 .vbtn:hover{border-color:var(--ink-3)}
 .vbtn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .vbtn.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
@@ -35,7 +35,7 @@ body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system
 .vbtn .va{font-size:11.5px;color:var(--ink-3);margin-top:2px}
 
 header.top{display:flex;align-items:center;gap:16px;padding:18px 0 4px;flex-wrap:wrap}
-.logo{width:120px;height:36px;border:1.5px dashed var(--wire);border-radius:6px;display:grid;place-items:center;color:var(--ink-3);font-size:11px;letter-spacing:.06em}
+.logo{display:block;height:52px;width:auto;mix-blend-mode:multiply;filter:brightness(1.08)}
 .titles h1{margin:0;font-size:22px;letter-spacing:-.01em}
 .titles p{margin:2px 0 0;color:var(--ink-2);font-size:13px}
 
@@ -189,7 +189,7 @@ body.ops .asof{display:none}
 .fbreak{flex-basis:100%;height:0}
 body:not(.ops) .fbreak{display:none}
 .seg button .ti{width:14px;height:14px;vertical-align:-2px;margin-right:5px}
-.srcs{display:flex;gap:4px;flex-wrap:wrap;align-items:center}
+.srcs{display:flex;gap:4px;flex-wrap:nowrap;align-items:center}
 .srcb{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--card);border-radius:8px;padding:4px 10px 4px 6px;font:inherit;font-size:13px;color:var(--ink);cursor:pointer}
 .srcb svg{width:17px;height:17px}
 .srcb[aria-pressed=false]{color:var(--ink-3);background:transparent;border-style:dashed}
@@ -212,7 +212,7 @@ body:not(.ops) .fbreak{display:none}
 .rq.modelled{background:#fff;border-style:dashed}
 .rq.mock{background:repeating-linear-gradient(135deg,#fff 0 2px,#8a8983 2px 3.4px);border-color:#8a8983}
 .rq.dim{opacity:.22}
-.rleg{flex-basis:100%;display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-end;font-size:11.5px;color:var(--ink-2)}
+.rleg{flex-basis:100%;display:flex;gap:12px;flex-wrap:wrap;justify-content:flex-start;font-size:11.5px;color:var(--ink-2)}
 .rleg span{display:inline-flex;align-items:center;gap:4px}
 .rleg .rq{width:10px;height:10px;cursor:default}
 .rleg svg{width:14px;height:12px}
@@ -290,6 +290,9 @@ body:not(.ops) .fbreak{display:none}
 .gbar .sb{width:100%;max-width:none;border-radius:0}
 .tick{position:absolute;left:16%;right:16%;height:0;border-top:2px solid var(--bad)}
 .refv{font-size:11px;color:var(--ink-3);font-weight:600;align-self:center}
+.refv small{font-size:9.5px;font-weight:500;margin-left:2px}
+.hu{font-weight:500;color:var(--ink-3)}
+.asofc{margin:8px 0 0;font-size:12px;color:var(--ink-3)}
 .nt{color:var(--wire);align-self:center;font-weight:700}
 .sc svg{display:block;width:100%;max-width:34px;height:auto;max-height:42px}
 .sc.sel svg{filter:drop-shadow(0 0 0 #000)}
@@ -353,7 +356,7 @@ body:not(.ops) .fbreak{display:none}
 
 <div class="wrap">
 <header class="top">
-  <div class="logo">SuCRIT LOGO</div>
+  <img class="logo" src="sucrit-logo.png" alt="SuCRIT: Sub-national Climate Resilient and Clean Growth Transition">
   <div class="titles">
     <h1>India's clean energy transition: state tracker</h1>
     <p>How India and the six SuCRIT states are moving from fossil to clean power</p>
@@ -371,7 +374,6 @@ body:not(.ops) .fbreak{display:none}
   <div class="fgroup opsonly"><label>Source</label><div class="srcs" id="srcBtns"></div></div>
 </div>
 
-<div class="intent" id="intent"></div>
 <div class="fbcard" id="fbcard"><h3>Changes from consultant feedback (2 Nov) · purple labels show where each one is</h3><ol>
   <li value="1"><b>Year-by-year trends with estimates:</b> every row in <a data-go="a">A · Report card</a> now has a 2023 → 2026 trend with the 2026 estimate (hollow dot) and the 2030 figure (dashed); the <a data-go="o">O · Overview</a> "Six states over time" chart shows every year plus 2030.</li>
   <li value="2"><b>Overall comparison of states:</b> new <a data-go="o">O · Overview</a> tab with the indicators that are ready to compare across states, side by side.</li>
@@ -480,19 +482,20 @@ body:not(.ops) .fbreak{display:none}
 <!-- ================= B: OPERATIONS (replaces State comparison, 3 Nov) ================= -->
 <div class="ver" id="vB">
   <div class="bhead">
-    <div><h2 id="bTitle"></h2><p>All 18 indicators, plus sheet additions 2A, 2B and 3A, grouped by theme. Hatched marks are mock values. Open a row for detail. Figures as of Aug 2026, financial years (2026 = FY 2025-26).</p></div>
     <div class="ready" id="ready"></div>
   </div>
   <section style="margin-top:0">
     <div class="card">
       <span class="pin" data-n="1">1</span>
-      <div class="chart-h"><div><h3>Places × years</h3><p id="xSub"></p></div>
+      <div class="chart-h"><div><h3>Places × years <span class="hu" id="xUnit"></span></h3></div>
         <select id="xSel" aria-label="Indicator for the places by years table"></select></div>
       <div class="heatwrap"><table class="xtab" id="xtab"></table></div>
+      <p class="asofc ops-asof"></p>
     </div>
   </section>
   <div class="ophead" id="ophead"></div>
   <div id="bands"></div>
+  <p class="asofc ops-asof"></p>
 </div>
 
 <!-- ================= C: STORY ================= -->
@@ -662,11 +665,10 @@ function seg(el, items, cur, on){
 }
 function renderChrome(){
   document.getElementById("versions").innerHTML = Object.entries(VERSIONS).map(([k,v])=>
-    `<button class="vbtn ${k===ver?'on':''} ${k==="o"||k==="d"?"fbx":""}" data-fb="${k==="o"?"Feedback 2":k==="d"?"Feedback 3":""}" role="tab" aria-selected="${k===ver}" data-v="${k}"><span class="vl">${k.toUpperCase()}</span><span><span class="vn">${v.n}</span><div class="vq">"${v.q}"</div></span></button>`).join("");
+    `<button class="vbtn ${k===ver?'on':''} ${k==="o"||k==="d"?"fbx":""}" data-fb="${k==="o"?"Feedback 2":k==="d"?"Feedback 3":""}" role="tab" aria-selected="${k===ver}" data-v="${k}"><span class="vl">${k.toUpperCase()}</span><span class="vn">${v.n}</span></button>`).join("");
   seg(document.getElementById("geoSeg"), GEOS.map(g=>[g, g==="National"?"India (all)":g]), geo, v=>{geo=v;render();});
   seg(document.getElementById("yearSeg"), YEARS.map(y=>[y, y+(isEst(y)?'<span class="est">est.</span>':'')]), year, v=>{year=v;render();});
   document.body.classList.toggle("ops", ver==="b"); if(ver==="b") renderOpsFilters();
-  document.getElementById("intent").innerHTML = VERSIONS[ver].intent;
   document.querySelectorAll(".ver").forEach(el=>el.classList.toggle("on", el.id==="v"+ver.toUpperCase()));
   document.getElementById("notesH").textContent = `Version ${ver.toUpperCase()} · ${VERSIONS[ver].n}: notes for review`;
   document.getElementById("notesL").innerHTML = VERSIONS[ver].notes.map((n,i)=>`<li data-n="${i+1}">${n}</li>`).join("");
@@ -1026,7 +1028,7 @@ function strip(I){
     if(I.viz==="rco"&&c){ const req=I.ref.all[c.i]; tip+=`<br>Required ${req}% · ${c.v>=req?"met":(req-c.v).toFixed(1)+" pts short"}`; }
     if(ghost) tip+=`<br>${fv(I,ghost)} GWh ordered`;
     if(I.id==="3"&&c) tip+=`<br>of India's clean capacity added`;
-    if(ref&&abs) inner=`<span class="refv">${fv(I,c.v)}</span>`;
+    if(ref&&abs) inner=`<span class="refv">${fv(I,c.v)}${I.u==="%"?"":`<small>${I.u==="g"?"g":I.u}</small>`}</span>`;
     else if(I.viz==="cap"){ const h=36*c.v/mx, ss=SRCX.filter(([k])=>srcOn.has(k)).reduce((a,[k])=>a+(D[g][k][c.y]||0),0)||1; inner=`<i class="sb stack" style="height:${Math.max(2,h).toFixed(1)}px">${SRCX.filter(([k])=>srcOn.has(k)).map(([k])=>{ const v=D[g][k][c.y]||0; return v?`<i style="flex:${(v/ss).toFixed(4)} 0 0;background:${SBG[k]}"></i>`:""; }).join("")}</i>`;
       tip+=`<br>`+SRCX.filter(([k])=>srcOn.has(k)&&D[g][k][c.y]).map(([k,l])=>`${l} ${fmt(D[g][k][c.y],"GW")}`).join(" · "); }
     else if(I.viz==="ghg") inner=ghgIcon(ghgStyle,c.v);
@@ -1093,7 +1095,7 @@ function drawXview(){
   if(!opts.some(I=>I.id===xInd)) xInd="2";
   sel.innerHTML=opts.map(I=>`<option value="${I.id}"${I.id===xInd?" selected":""}>${I.n} (${I.id})</option>`).join("");
   const I=IND.find(x=>x.id===xInd), d=dat(I), cap=I.id==="2";
-  document.getElementById("xSub").textContent=`${cap?"GW of the sources picked above, with their mix":I.u==="%"?"Percent":UL[I.u]}${!cap&&I.dir!==0?". Darker is better, across every year and state":""}${I.st==="mock"?". Mock values":I.st==="proxy"?". Proxy values":""}. Click a cell to jump there.`;
+  document.getElementById("xUnit").textContent=`(${I.u==="%"?"%":UL[I.u]})`;
   const sv=STATES.flatMap(g=>d[g]||[]).filter(v=>v!=null), lo=Math.min(...sv), hi=Math.max(...sv);
   let h=`<thead><tr><th>Place</th>${Y5.map(y=>`<th data-y="${y}" class="${y===year?"ysel":""}${y==="2030"?" fut":""}">${y==="2026"?"2026 est.":y}</th>`).join("")}</tr></thead><tbody>`;
   GEOS.forEach(g=>{ const ref=g==="National"; h+=`<tr class="${ref?"ref":""}${g===geo?" gsel":""}"><td data-g="${g}">${name(g)}</td>`;
@@ -1109,15 +1111,15 @@ function drawXview(){
 function renderOpsFilters(){
   seg(document.getElementById("themeSeg"),[["all","All"],...THEMES.map(t=>[t.k,`<svg class="ti" aria-hidden="true"><use href="#${t.ico}"/></svg>${t.s}`])],theme,v=>{theme=v;render();});
   const sb=document.getElementById("srcBtns");
-  sb.innerHTML=SRCX.map(([k,l])=>`<button class="srcb" data-k="${k}" aria-pressed="${srcOn.has(k)}">${ICON("i-"+k)}${l}</button>`).join("")+(srcOn.size<5?`<button class="linkbtn" data-k="all">All sources</button>`:"");
+  sb.innerHTML=SRCX.map(([k,l])=>`<button class="srcb" data-k="${k}" aria-pressed="${srcOn.has(k)}">${ICON("i-"+k)}${l}</button>`).join("");
   sb.onclick=e=>{ const b=e.target.closest("button"); if(!b) return; const k=b.dataset.k;
-    if(k==="all") srcOn=new Set(SRCX.map(s=>s[0])); else { srcOn.has(k)?srcOn.delete(k):srcOn.add(k); if(!srcOn.size) srcOn=new Set(SRCX.map(s=>s[0])); } render(); };
+    srcOn.has(k)?srcOn.delete(k):srcOn.add(k); if(!srcOn.size) srcOn=new Set(SRCX.map(s=>s[0])); render(); };
   const pb=document.getElementById("stOnly"); pb.setAttribute("aria-pressed",stateOnly); pb.onclick=()=>{ stateOnly=!stateOnly; render(); };
 }
 function drawOps(){
   hideTip();
-  document.getElementById("bTitle").textContent=`Every indicator, every place · ${yl(year)}`;
   drawReady(); drawXview(); drawOpHead();
+  document.querySelectorAll(".ops-asof").forEach(p=>p.textContent=`Values as of ${yl(year)}`);
   const host=document.getElementById("bands"); let h="";
   THEMES.forEach(T=>{ if(theme!=="all"&&theme!==T.k) return;
     const list=IND.filter(I=>I.th===T.k&&!(stateOnly&&I.lvl==="nat")); if(!list.length) return;
