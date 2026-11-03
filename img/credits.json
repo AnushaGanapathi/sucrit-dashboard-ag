@@ -1,0 +1,32 @@
+{
+ "hydro": {
+  "file": "File:Bhakra Dam, Bilaspur.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Bhakra_Dam,_Bilaspur.jpg",
+  "artist": "Apar Singh Bataan",
+  "lic": "CC BY-SA 3.0"
+ },
+ "solar": {
+  "file": "File:KamuthiSolarPark.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:KamuthiSolarPark.jpg",
+  "artist": "Financial Express",
+  "lic": "CC BY-SA 4.0"
+ },
+ "nuc": {
+  "file": "File:Kudankulam Nuclear Power Plant Unit 1 and 2.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Kudankulam_Nuclear_Power_Plant_Unit_1_and_2.jpg",
+  "artist": "Reetesh Chaurasia",
+  "lic": "CC BY-SA 4.0"
+ },
+ "bio": {
+  "file": "File:Sugarcane field of Kachirapalayam.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:Sugarcane_field_of_Kachirapalayam.jpg",
+  "artist": "Thamizhpparithi Maari",
+  "lic": "CC BY-SA 4.0"
+ },
+ "wind": {
+  "file": "File:A Wind turbine near Kanyakumari.jpg",
+  "page": "https://commons.wikimedia.org/wiki/File:A_Wind_turbine_near_Kanyakumari.jpg",
+  "artist": "UY Scuti",
+  "lic": "CC BY-SA 3.0"
+ }
+}
