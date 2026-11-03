@@ -837,7 +837,7 @@ function drawMap(){
   document.getElementById("aMap").innerHTML=s;
   const unit=k==="total"?" GW":"%";
   document.getElementById("mapLeg").innerHTML=`<span class="mlg"><span>0${unit}</span><i style="background:linear-gradient(90deg,${SEQ[0]},${mixHex(SEQ[0],SEQ[1],.5)},${SEQ[1]})"></i><span>${k==="total"?fmt(hi,"GW"):hi.toFixed(0)}${unit}</span></span>
-    <span><i style="background:#e8e7e3"></i>Not a SuCRIT state</span><span class="muted">Bar and icons: mix of clean capacity by source. Click a state to filter.</span>`;
+    <span><i style="background:#e8e7e3"></i>Not a SuCRIT state</span>`;
   document.getElementById("mapAsof").textContent=`Values as of ${yl(year)}`;
 }
 
