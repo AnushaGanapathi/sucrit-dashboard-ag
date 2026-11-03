@@ -74,7 +74,8 @@ select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--line);
 /* ---------- A: report card ---------- */
 /* A: map + headline tiles */
 .ahero{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:12px;align-items:start}
-.mhead{flex-wrap:wrap;align-items:center}
+.mhead{flex-direction:column;align-items:flex-start;gap:8px}
+#mapSeg{flex-wrap:nowrap}
 .mapsvg{display:block;width:100%;height:auto;margin-top:4px}
 .ms{fill:#e8e7e3;stroke:#fff;stroke-width:.7}
 .ms.on{cursor:pointer;stroke:#fff;stroke-width:1}
@@ -177,6 +178,23 @@ select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--line);
 .flowh{display:flex;gap:8px;align-items:flex-start}
 .flowh h3{margin:0;font-size:16px;line-height:1.35;max-width:70ch}
 .flowsvg{display:block;width:100%;height:auto;max-height:260px;margin-top:10px}
+.ghgban{display:grid;grid-template-columns:minmax(220px,.9fr) minmax(0,1.7fr) minmax(220px,1fr);gap:22px;align-items:center;margin-top:12px;background:linear-gradient(120deg,#e9f1fa 0%,#f6f9fc 60%,#fff 100%);border-color:#dbe6f2}
+.ghgban .big{font-size:44px;font-weight:700;letter-spacing:-.02em;line-height:1.05;margin:6px 0 6px;font-variant-numeric:tabular-nums}
+.ghgban .bsub{font-size:17px;color:var(--ink-2);font-weight:600;letter-spacing:0}
+.gb-sub{font-size:13px;color:var(--ink-2);line-height:1.5}
+.chip{display:inline-block;font-size:11px;font-weight:700;border-radius:10px;padding:1px 8px;margin-top:4px}
+.chip.dash{border:1.5px dashed #1f7a4a;color:#1f7a4a;background:#fff}
+.gb-c{width:100%;height:auto;display:block}
+.gb-r{border-left:1px solid #dbe6f2;padding-left:20px}
+.gb-rh{display:flex;flex-direction:column;font-size:12.5px;gap:1px}
+.gb-rh span{font-size:11.5px;color:var(--ink-3)}
+.gb-puffs{display:flex;gap:12px;align-items:flex-end;margin-top:10px}
+.gp{display:flex;flex-direction:column;align-items:center;gap:2px;opacity:.55;transition:opacity .2s}
+.gp.on{opacity:1}
+.gp svg{width:46px;height:74px}
+.gp b{font-size:13px;font-variant-numeric:tabular-nums}
+.gp span{font-size:11px;color:var(--ink-3)}
+@media (max-width:1100px){.ghgban{grid-template-columns:1fr}.gb-r{border-left:0;padding-left:0}}
 .credits{margin:20px 0 0;font-size:11px;color:var(--ink-3)}
 .credits a{color:var(--ink-2)}
 @media (max-width:1000px){.scards{grid-template-columns:repeat(3,minmax(0,1fr))}}
@@ -557,6 +575,16 @@ body:not(.ops) .fbreak{display:none}
     <div class="atitle"><h2 id="aPlace"></h2><span id="aYear"></span></div>
     <div class="atb"><button class="btn2" id="playY"></button><button class="btn2" id="dlCsv"><svg aria-hidden="true"><use href="#k-dl"/></svg>Download data (CSV)</button></div>
   </div>
+  <section class="card ghgban">
+    <span class="pin" data-n="1">1</span>
+    <div class="gb-l">
+      <div class="kicker">SuCRIT's headline goal · Indicator 1</div>
+      <div class="big" id="aNdcBig"></div>
+      <div class="gb-sub fbx" id="aNdcSub" data-fb="Feedback 6 · detail in hover"></div>
+    </div>
+    <svg id="aNdc" class="gb-c" viewBox="0 0 560 176" role="img" aria-label="Emissions intensity as clouds: business as usual, 7.4% smaller in 2025 and 21.7% smaller in 2030, inside the 15% goal line"></svg>
+    <div class="gb-r"><div class="gb-rh" id="aPuffH"></div><div class="gb-puffs" id="aPuffs"></div></div>
+  </section>
   <div class="scards" id="srcCards"></div>
   <section class="ahero">
     <div class="card mapcard">
@@ -568,20 +596,6 @@ body:not(.ops) .fbreak{display:none}
   </section>
   <section class="card flowcard" id="aFlow"></section>
   <div class="sec-h"><h2>In detail</h2></div>
-  <section>
-    <div class="card ndcA">
-      <span class="pin" data-n="1">1</span>
-      <div>
-        <div class="kicker">SuCRIT's headline goal · Indicator 1 <span class="tag nat">National only</span></div>
-        <div class="big" id="aNdcBig"></div>
-        <div style="color:var(--ink-2);margin-top:14px" id="aNdcSub" class="fbx" data-fb="Feedback 6 · detail in hover"></div>
-      </div>
-      <div>
-        <svg id="aNdc" viewBox="0 0 640 96" width="100%"></svg>
-      </div>
-    </div>
-  </section>
-
   <div class="sec-h"><h2 id="aTitle"></h2><p>Where things are now, where they're meant to be by 2030, and whether the pace is enough</p></div>
   <section style="margin-top:0">
     <div class="card fbx" data-fb="Feedback 1 · year trends + estimates">
@@ -754,7 +768,7 @@ const VERSIONS = {
   a:{n:"Report card", q:"Are we on track for 2030?",
      intent:"<b>Intention:</b> one honest status per indicator, ready to lift into a report. Uses progress bars, pace checks and plain-sentence summaries.",
      notes:[
-      "<b>The goal leads.</b> SuCRIT's headline goal (Indicator 1) is an extra ~15% cut by 2030. There's no measured value yet, so the modelled 2025 and 2030 values are drawn as hollow, dashed pins. National only, so it stays the same when a state is picked.",
+      "<b>The goal leads.</b> SuCRIT's headline goal (Indicator 1) is an extra ~15% cut by 2030. There's no measured value yet, so the modelled 2025 and 2030 values are drawn as dashed clouds, with the goal as a dashed outline. National only, so it stays the same when a state is picked.",
       "<b>One row per indicator, as a bullet bar:</b> now (solid), what's left to the 2030 projection (hatched), target (triangle). The status pill compares the <i>recent pace</i> with the <i>pace needed</i> to reach 2030. <b>This pace rule is a design proposal</b>, so check it with Anusha before showing the client.",
       "<b>Copy-ready sentences.</b> For pasting a line into a report or slide. The wording updates with State + Year.",
       "<b>Trade-off:</b> best for 'how are we doing?', weak for comparing states (one at a time, like ICED).",
@@ -1061,20 +1075,28 @@ document.getElementById("aSide").addEventListener("click",e=>{ if(e.target.close
 document.getElementById("playY").onclick=togglePlay;
 document.getElementById("dlCsv").onclick=downloadCsv;
 
+/* Indicator 1 as shrinking clouds (modelled), next to measured CO₂ puffs (3A) by year */
+function drawGhgBanner(){
+  document.getElementById("aNdcBig").innerHTML=`${cnt("g-cut",21.7,1)}% <span class="bsub">less by 2030</span>`;
+  document.getElementById("aNdcSub").innerHTML=`Modelled extra cut in emissions per rupee of GDP, beyond business as usual. Goal: about 15%. <span class="chip dash">Modelled to beat the goal</span> <span class="info" data-tip="Not measured yet: the official figure waits for India's next climate report (BTR). Both values are WRI India modelling scenarios on a net-zero path, so they aren't credited to SuCRIT alone. Tracked for India only.">i</span>`;
+  const BW=150, base=134, cl=(cx,w,fill,stroke,dash,tip)=>{ const h=w*14/24, sw=(1.6*24/w).toFixed(3);
+    return `<use href="#g-cloud" x="${(cx-w/2).toFixed(1)}" y="${(base-h).toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" style="fill:${fill};stroke:${stroke};stroke-width:${sw};${dash?`stroke-dasharray:${(4*24/w).toFixed(2)} ${(3*24/w).toFixed(2)}`:""}"${tip?` data-tip="${tip}"`:""}/>`; };
+  const lab=(cx,a,b)=>`<text x="${cx}" y="${base+22}" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1c1a">${a}</text><text x="${cx}" y="${base+39}" text-anchor="middle" font-size="12" fill="#55544f">${b}</text>`;
+  const arr=x=>`<path d="M${x-12} ${base-30}h22m-6-6 6 6-6 6" fill="none" stroke="#a3a29b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>`;
+  document.getElementById("aNdc").innerHTML=
+     cl(85,BW,"#c9c8c2","#a3a29b",false,"<b>Business as usual, 2030</b><br>Emissions per rupee of GDP with no extra action")
+    +arr(182)+cl(278,BW*(1-.074),"#dde6f0","#55544f",true,"<b>2025, modelled</b><br>7.4% below business as usual")
+    +arr(372)+cl(468,BW*.85,"none","#1c1c1a",true,null)+cl(468,BW*(1-.217),"#cfe0f2","#55544f",true,"<b>2030, modelled</b><br>21.7% below business as usual. Inside the 15% goal line.")
+    +`<text x="468" y="${(base-BW*.85*14/24-8).toFixed(1)}" font-size="12" font-weight="700" fill="#1c1c1a" text-anchor="middle">SuCRIT goal: −15%</text>`
+    +lab(85,"Business as usual","2030, no extra action")+lab(278,"2025 · −7.4%","modelled")+lab(468,"2030 · −21.7%","modelled");
+  const g=D[geo];
+  document.getElementById("aPuffH").innerHTML=`<b>Measured: CO₂ per unit of electricity</b><span>${name(geo)} · each puff is 100 g/kWh</span>`;
+  document.getElementById("aPuffs").innerHTML=YEARS.map(y=>{ const v=g.ei[y]; return `<div class="gp${y===year?" on":""}" data-tip="<b>${name(geo)}, ${yl(y)}</b><br>${v!=null?Math.round(v)+" gCO₂/kWh":"no value"}">${v!=null?ghgIcon("clouds",v):""}<b>${v!=null?Math.round(v):"—"}</b><span>${isEst(y)?"2026e":y}</span></div>`; }).join("");
+  countUp(document.getElementById("aNdcBig"));
+}
 function drawA(){
   drawAHero();
-  // Indicator 1: modelled extra cut vs SuCRIT goal (no measured value yet)
-  document.getElementById("aNdcBig").innerHTML = `21.7% <span style="font-size:18px;color:var(--ink-2);font-weight:600">modelled, by 2030</span>`;
-  document.getElementById("aNdcSub").innerHTML = `extra cut in emissions per rupee of GDP, beyond business as usual. Goal: ~15% by 2030. <b>Not measured yet.</b> <span class="info" data-tip="The official figure waits for India's next climate report (BTR). Both values are WRI India modelling scenarios and assume a net-zero path, so they aren't credited to SuCRIT alone.">i</span>${geo!=="National"?` <br><span class="muted">Same for every state: this goal is tracked for India only.</span>`:""}`;
-  const svg=document.getElementById("aNdc"); clear(svg);
-  const x0=8,x1=630, X=v=>x0+(x1-x0)*v/25;
-  S("rect",{x:x0,y:40,width:x1-x0,height:10,rx:5,fill:css("--line-2")},svg);
-  S("line",{x1:X(15),x2:X(15),y1:24,y2:62,stroke:css("--ink"),"stroke-width":2.5},svg);
-  S("text",{x:X(15),y:18,"text-anchor":"middle","font-size":12,"font-weight":700,fill:css("--ink")},svg,"SuCRIT goal ~15%");
-  [[7.4,"2025 · 7.4%"],[21.7,"2030 · 21.7%"]].forEach(([v,l])=>{ const c=S("circle",{cx:X(v),cy:45,r:9,fill:"#fff",stroke:css("--ink"),"stroke-width":1.6,"stroke-dasharray":"3 2.5"},svg);
-    tipOn(c,`<b>Modelled for ${l.slice(0,4)}</b><br>${v}% extra cut (scenario, not measured)`);
-    S("text",{x:X(v),y:24,"text-anchor":"middle","font-size":11.5,fill:css("--ink-2")},svg,l); });
-  [0,5,10,15,20,25].forEach(v=>S("text",{x:X(v),y:80,"text-anchor":v?(v===25?"end":"middle"):"start","font-size":10.5,fill:css("--ink-3")},svg,v+"%"));
+  drawGhgBanner();
 
   document.getElementById("aTitle").textContent = `${name(geo)}, ${yl(year)}: status by indicator`;
   const el=document.getElementById("aRows"); el.innerHTML="";
