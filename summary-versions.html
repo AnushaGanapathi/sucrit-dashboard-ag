@@ -13,6 +13,7 @@
   --g-solar:linear-gradient(180deg,#ffcb2e,#ef7300); --g-hydro:linear-gradient(180deg,#58acf4,#1d68cf);
   --good:#0ca30c; --bad:#d03b3b;
   --note:#fff6c8; --note-ink:#6b5a00; --pin:#f2c200;
+  --sec-elec:#6e56cf; --sec-trn:#d6407f; --sec-oth:#b7bec8;
 }
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);font:14px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif}
@@ -105,6 +106,41 @@ select{font:inherit;font-size:13px;padding:5px 8px;border:1px solid var(--line);
 .kbar i{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:var(--ink)}
 .kbar b{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:var(--bad);border-radius:1px}
 .kspark{width:100%;max-width:140px;height:30px;margin-top:auto;padding-top:4px}
+/* A: sector chapters (electricity, transport) and the sector legend under the clouds */
+.chh{display:flex;align-items:center;gap:12px;margin:36px 0 12px;padding-bottom:12px;border-bottom:1px solid var(--line);scroll-margin-top:120px}
+.chh .chi{flex:none;width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 13%,#fff);color:var(--c)}
+.chh .chi svg{width:20px;height:20px}
+.chh h2{margin:0;font-size:20px;letter-spacing:-.01em;line-height:1.2}
+.chh p{margin:1px 0 0;color:var(--ink-2);font-size:13px}
+.gb-m{min-width:0}
+.secleg{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;justify-content:center;margin-top:2px}
+.secleg button,.secleg .sw{display:inline-flex;align-items:center;gap:6px;border:1px solid transparent;background:none;border-radius:999px;padding:3px 9px;font:inherit;font-size:12px;color:var(--ink)}
+.secleg button{cursor:pointer}
+.secleg button:hover{border-color:var(--line);background:#fff}
+.secleg button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.secleg i{display:block;width:10px;height:10px;border-radius:3px;background:var(--c)}
+.secleg button svg{width:10px;height:10px;color:var(--ink-3)}
+.secleg .muted{font-size:11.5px}
+.trn{margin-top:0}
+.carrow{display:grid;grid-template-columns:118px 1fr;gap:16px;align-items:center;padding:12px 0}
+.carrow+.carrow{border-top:1px solid var(--line-2)}
+.carl b{display:block;font-size:24px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums;line-height:1.1}
+.carl span{font-size:12px;color:var(--ink-2)}
+.cars{display:grid;grid-template-columns:repeat(10,1fr);gap:6px 8px}
+.cars svg{display:block;width:100%;height:auto;aspect-ratio:24/14;fill:var(--line-2)}
+.cars svg.on{fill:var(--sec-trn)}
+.cars.tgt svg.on{fill:color-mix(in srgb,var(--sec-trn) 18%,#fff);stroke:var(--sec-trn);stroke-width:1.1}
+.hbs{display:grid;gap:7px;margin-top:6px}
+.hb{display:grid;grid-template-columns:112px 1fr;gap:10px;align-items:center;font-size:12.5px}
+.hb.dim{opacity:.45}
+.hb.on>span:first-child{font-weight:700}
+.hbt{position:relative;display:flex;align-items:center;gap:6px;min-width:0;height:18px}
+.hbt i{display:block;height:14px;border-radius:3px;background:var(--sec-trn);flex:none}
+.hb.nat .hbt i{background:var(--ink-2)}
+.hbt b{font-weight:600;font-variant-numeric:tabular-nums}
+.hbt u{position:absolute;top:-4px;bottom:-4px;border-left:1.5px dashed var(--ink);text-decoration:none}
+.hbn{margin-top:10px;font-size:12px;color:var(--ink-2);display:flex;align-items:center;gap:6px}
+.hbn u{display:inline-block;width:0;height:12px;border-left:1.5px dashed var(--ink)}
 .kmixb{display:grid;gap:4px;margin-top:6px}
 .kmixb button{display:grid;grid-template-columns:16px 64px 1fr;gap:6px;align-items:center;font:inherit;font-size:12px;color:var(--ink);background:none;border:0;padding:3px 4px;margin:0 -4px;border-radius:6px;cursor:pointer;text-align:left}
 .kmixb button:hover{background:var(--line-2)}
@@ -582,9 +618,13 @@ body:not(.ops) .fbreak{display:none}
       <div class="big" id="aNdcBig"></div>
       <div class="gb-sub fbx" id="aNdcSub" data-fb="Feedback 6 · detail in hover"></div>
     </div>
-    <svg id="aNdc" class="gb-c" viewBox="0 0 560 162" role="img" aria-label="Emissions intensity as clouds: business as usual, 7.4% smaller in 2025 and 21.7% smaller in 2030, inside the 15% goal line"></svg>
+    <div class="gb-m">
+      <svg id="aNdc" class="gb-c" viewBox="0 0 560 162" role="img" aria-label="Emissions intensity as clouds split by sector (illustrative): business as usual, 7.4% smaller in 2025 and 21.7% smaller in 2030, inside the 15% goal line"></svg>
+      <div class="secleg" id="aSecLeg"></div>
+    </div>
     <div class="gb-r"><div class="gb-rh" id="aPuffH"></div><div class="gb-puffs" id="aPuffs"></div></div>
   </section>
+  <header class="chh" id="ch-elec" style="--c:var(--sec-elec)"><span class="chi"><svg aria-hidden="true"><use href="#t-pow"/></svg></span><div><h2>Electricity</h2><p>Clean power, the grid and storage</p></div></header>
   <div class="scards" id="srcCards"></div>
   <section class="ahero">
     <div class="card mapcard">
@@ -606,6 +646,18 @@ body:not(.ops) .fbreak{display:none}
         <span><svg width="26" height="10"><line x1="1" y1="5" x2="25" y2="5" stroke="#1c1c1a" stroke-width="1.6" stroke-dasharray="3 2"/></svg> Estimate / 2030</span>
       </div>
       <div id="aRows"></div>
+    </div>
+  </section>
+
+  <header class="chh" id="ch-trn" style="--c:var(--sec-trn)"><span class="chi"><svg aria-hidden="true"><use href="#t-trn"/></svg></span><div><h2>Transport</h2><p>Electric vehicles <span class="oflag" data-tip="Invented values to test the layout. Replace when VAHAN data is shared.">Mock</span></p></div></header>
+  <section class="grid2 trn">
+    <div class="card">
+      <div class="chart-h"><div><h3 id="trnCarsT"></h3><p>Each car is 5% of new sales</p></div></div>
+      <div id="trnCars"></div>
+    </div>
+    <div class="card">
+      <div class="chart-h"><div><h3 id="trnBarsT"></h3></div><div class="seg" id="trnSeg"></div></div>
+      <div id="trnBars"></div>
     </div>
   </section>
 
@@ -747,6 +799,7 @@ body:not(.ops) .fbreak{display:none}
   <symbol id="k-pause" viewBox="0 0 24 24"><g fill="currentColor"><rect x="6" y="4.5" width="4" height="15" rx="1"/><rect x="14" y="4.5" width="4" height="15" rx="1"/></g></symbol>
   <symbol id="k-dl" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5v11M7 10l5 5 5-5M4.5 19.5h15"/></g></symbol>
   <symbol id="g-cloud" viewBox="0 0 24 14"><path d="M6 13.6h13a4.4 4.4 0 0 0 .6-8.7A6.4 6.4 0 0 0 7.4 4.1 4.8 4.8 0 0 0 6 13.6Z"/></symbol>
+<symbol id="v-car" viewBox="0 0 24 14"><path d="M1.6 10.2V8.3c0-.8.5-1.5 1.2-1.7l2.9-1L8.2 2.2c.4-.5 1-.8 1.7-.8h4.6c.7 0 1.3.3 1.7.8l2.7 3.3 2.4.6c.9.2 1.6 1.1 1.6 2v2.1c0 .5-.4.9-.9.9h-1.3a2.6 2.6 0 0 0-5.2 0H9.4a2.6 2.6 0 0 0-5.2 0H2.5c-.5 0-.9-.4-.9-.9Z"/><circle cx="6.8" cy="11.1" r="1.9"/><circle cx="17.1" cy="11.1" r="1.9"/></symbol>
 </defs></svg>
 
 <script>
@@ -1071,6 +1124,19 @@ document.getElementById("playY").onclick=togglePlay;
 document.getElementById("dlCsv").onclick=downloadCsv;
 
 /* Indicator 1 as shrinking clouds (modelled), next to measured CO₂ puffs (3A) by year */
+// sector split inside each cloud: assumed, not data (power ~28% of 2023 emissions is the only anchor)
+const SEC=[["elec","Electricity","var(--sec-elec)"],["trn","Transport","var(--sec-trn)"],["oth","Other sectors","var(--sec-oth)"]];
+const SEC_SPLIT=[[32,13,55],[27,12.4,53.2],[20,10.3,48]]; // business as usual, 2025, 2030 (BAU = 100)
+const CLOUD_D="M6 13.6h13a4.4 4.4 0 0 0 .6-8.7A6.4 6.4 0 0 0 7.4 4.1 4.8 4.8 0 0 0 6 13.6Z";
+// height (in cloud units, 0 = top) below which the cloud holds fraction f of its area; sampled once
+let CLOUD_ROWS=null;
+function cloudCut(f){
+  if(!CLOUD_ROWS){ const c=document.createElement("canvas").getContext("2d"), p=new Path2D(CLOUD_D); let tot=0; CLOUD_ROWS=[];
+    for(let j=139;j>=0;j--){ let w=0; for(let i=0;i<240;i++) if(c.isPointInPath(p,i/10+.05,j/10+.05)) w++; tot+=w; CLOUD_ROWS.push([j/10,tot]); }
+    CLOUD_ROWS.forEach(r=>r[1]/=tot); }
+  const r=CLOUD_ROWS.find(r=>r[1]>=f); return r?r[0]:0;
+}
+document.getElementById("aSecLeg").addEventListener("click",e=>{ const b=e.target.closest("[data-ch]"); if(b) document.getElementById(b.dataset.ch).scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"}); });
 function drawGhgBanner(){
   document.getElementById("aNdcBig").innerHTML=`${cnt("g-cut",21.7,1)}% <span class="bsub">less by 2030</span>`;
   document.getElementById("aNdcSub").innerHTML=`Extra cut in emissions per rupee of GDP, beyond business as usual. <span class="chip dash">Modelled · beats the goal</span> <span class="info" data-tip="<b>SuCRIT's headline goal (Indicator 1)</b><br>Not measured yet: the official figure waits for India's next climate report (BTR). Both values are WRI India modelling scenarios on a net-zero path, so they aren't credited to SuCRIT alone. Tracked for India only.">i</span>`;
@@ -1078,20 +1144,45 @@ function drawGhgBanner(){
     return `<use href="#g-cloud" x="${(cx-w/2).toFixed(1)}" y="${(base-h).toFixed(1)}" width="${w.toFixed(1)}" height="${h.toFixed(1)}" style="fill:${fill};stroke:${stroke};stroke-width:${sw};${dash?`stroke-dasharray:${(4*24/w).toFixed(2)} ${(3*24/w).toFixed(2)}`:""}"${tip?` data-tip="${tip}"`:""}/>`; };
   const lab=(cx,a)=>`<text x="${cx}" y="${base+22}" text-anchor="middle" font-size="13" font-weight="700" fill="#1c1c1a">${a}</text>`;
   const arr=x=>`<path d="M${x-12} ${base-30}h22m-6-6 6 6-6 6" fill="none" stroke="#a3a29b" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>`;
+  // each cloud is filled bottom-up with its sector split (illustrative), bands sized by area
+  const sec=(id,cx,w,vals,stroke,dash,head)=>{ const s=w/24, x=cx-w/2, y=base-14*s, tot=vals.reduce((a,b)=>a+b,0); let acc=0, yPrev=14, r="";
+    [2,1,0].forEach(k=>{ acc+=vals[k]/tot; const yc=acc>.999?0:cloudCut(acc);
+      r+=`<rect x="${x.toFixed(1)}" y="${(y+yc*s).toFixed(1)}" width="${w.toFixed(1)}" height="${((yPrev-yc)*s+.5).toFixed(1)}" style="fill:${SEC[k][2]}" data-tip="${head}<br>${SEC[k][1]}: ${Math.round(vals[k]/tot*100)}% of emissions (illustrative)"/>`; yPrev=yc; });
+    return `<clipPath id="${id}"><path d="${CLOUD_D}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${s.toFixed(4)})"/></clipPath><g clip-path="url(#${id})">${r}</g>`+cl(cx,w,"none",stroke,dash,null); };
   document.getElementById("aNdc").innerHTML=
-     cl(85,BW,"#c9c8c2","#a3a29b",false,"<b>Business as usual, 2030</b><br>Emissions per rupee of GDP with no extra action")
-    +arr(182)+cl(278,BW*(1-.074),"#dde6f0","#55544f",true,"<b>2025, modelled</b><br>7.4% below business as usual")
-    +arr(372)+cl(468,BW*.85,"none","#1c1c1a",true,null)+cl(468,BW*(1-.217),"#cfe0f2","#55544f",true,"<b>2030, modelled</b><br>21.7% below business as usual. Inside the 15% goal line.")
+     sec("cc0",85,BW,SEC_SPLIT[0],"#8a8983",false,"<b>Business as usual, 2030</b><br>No extra action")
+    +arr(182)+sec("cc1",278,BW*(1-.074),SEC_SPLIT[1],"#55544f",true,"<b>2025, modelled</b><br>7.4% below business as usual")
+    +arr(372)+cl(468,BW*.85,"none","#1c1c1a",true,null)+sec("cc2",468,BW*(1-.217),SEC_SPLIT[2],"#55544f",true,"<b>2030, modelled</b><br>21.7% below business as usual, inside the 15% goal line")
     +`<text x="468" y="${(base-BW*.85*14/24-8).toFixed(1)}" font-size="12" font-weight="700" fill="#1c1c1a" text-anchor="middle">15% goal</text>`
     +lab(85,"Business as usual")+lab(278,"2025 · −7.4%")+lab(468,"2030");
+  document.getElementById("aSecLeg").innerHTML=SEC.map(([k,l,c])=>k==="oth"?`<span class="sw" style="--c:${c}"><i></i>${l}</span>`
+    :`<button style="--c:${c}" data-ch="ch-${k}" aria-label="${l}: jump to section"><i></i>${l}<svg aria-hidden="true"><use href="#i-chev"/></svg></button>`).join("")+`<span class="muted">Split is illustrative</span>`;
   const g=D[geo];
   document.getElementById("aPuffH").innerHTML=`<b>Measured CO₂ per kWh</b><span>1 puff = 100 g</span>`;
   document.getElementById("aPuffs").innerHTML=YEARS.map(y=>{ const v=g.ei[y]; return `<div class="gp${y===year?" on":""}" data-tip="<b>${name(geo)}, ${yl(y)}</b><br>${v!=null?Math.round(v)+" gCO₂/kWh":"no value"}">${v!=null?ghgIcon("clouds",v):""}<b>${v!=null?Math.round(v):"—"}</b><span>${isEst(y)?"2026e":y}</span></div>`; }).join("");
   countUp(document.getElementById("aNdcBig"));
 }
+/* ---- transport chapter: cars per 20 new sales, then states as bars (mock data, Indicators 8 and 9) ---- */
+let trnM="ev";
+function drawTrn(){
+  const yi=YEARS.indexOf(year), ZEV=IND.find(I=>I.id==="8"), BUS=IND.find(I=>I.id==="9"), v=ZEV.data[geo][yi];
+  const cars=(p,tgt)=>{ const n=Math.round(p/5); return `<div class="cars${tgt?" tgt":""}">${Array.from({length:20},(_,k)=>`<svg class="${k<n?"on":""}" aria-hidden="true"><use href="#v-car"/></svg>`).join("")}</div>`; };
+  document.getElementById("trnCarsT").textContent=`Of every 20 new vehicles sold in ${name(geo)}, how many are electric`;
+  document.getElementById("trnCars").innerHTML=
+     `<div class="carrow"><div class="carl"><b>${v.toFixed(1)}%</b><span>${yl(year)}</span></div>${cars(v)}</div>`
+    +`<div class="carrow"><div class="carl"><b>30%</b><span>${geo==="National"?"2030 target":"India's 2030 target"}</span></div>${cars(30,true)}</div>`;
+  seg(document.getElementById("trnSeg"),[["ev","EV sales"],["bus","E-buses"]],trnM,m=>{trnM=m;drawTrn();});
+  const I=trnM==="ev"?ZEV:BUS, places=(trnM==="ev"?GEOS:STATES).filter(g=>I.data[g][yi]!=null).sort((a,b)=>I.data[b][yi]-I.data[a][yi]);
+  const max=niceMax(Math.max(...places.map(g=>I.data[g][yi]),trnM==="ev"?30:0)), W=p=>(p/max*86).toFixed(1);
+  document.getElementById("trnBarsT").textContent=`${trnM==="ev"?"Share of new vehicles that's electric":"Share of new buses that's electric"}, ${yl(year)}`;
+  document.getElementById("trnBars").innerHTML=`<div class="hbs">${places.map(g=>{ const p=I.data[g][yi];
+      return `<div class="hb${g==="National"?" nat":""}${g===geo?" on":geo!=="National"&&g!=="National"?" dim":""}"><span>${name(g)}</span><span class="hbt"><i style="width:${W(p)}%"></i><b>${p.toFixed(1)}%</b>${trnM==="ev"?`<u style="left:${W(30)}%"></u>`:""}</span></div>`; }).join("")}</div>`
+    +`<div class="hbn">${trnM==="ev"?`<u></u>India's target: 30% of new sales by 2030`:"No target set · state-level only"}</div>`;
+}
 function drawA(){
   drawAHero();
   drawGhgBanner();
+  drawTrn();
 
   const el=document.getElementById("aRows"); el.innerHTML="";
   const g=D[geo], est=isEst(year);
